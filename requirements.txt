@@ -1,0 +1,10 @@
+# RGFLAT - RoleplayGenerator v1.2 Fixed
+# Core dependencies
+jinja2>=3.1.0
+
+# For real LLM integration (Grok / xAI)
+# requests is usually pre-installed; uncomment if needed
+# requests>=2.31.0
+
+# Optional: for advanced users wanting full OpenAI-compatible client
+# openai>=1.0.0
