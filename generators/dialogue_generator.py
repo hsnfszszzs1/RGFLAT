@@ -1,20 +1,12 @@
 """
 RGFLAT Generators - Dialogue Generator
 
-Advanced dialogue generation with emotional physics and consistency.
+Cleaned up version with proper structure.
 """
 
-# Note: Some imports may need further updates as other modules are completed
-
-try:
-    from core.parameters import RoleplayParameters
-    from physics.roleplay_physics import RoleplayPhysics
-    from memory.memory_system import MemorySystem
-except ImportError:
-    pass
-
-
 class DialogueGenerator:
+    """Dialogue generator for roleplay responses."""
+
     def __init__(self, params=None, physics=None, memory=None, consistency=None, multi_char=None):
         self.params = params
         self.physics = physics
@@ -24,12 +16,17 @@ class DialogueGenerator:
 
     def generate_response(self, user_input: str, use_waidrin: bool = False) -> str:
         if use_waidrin:
-            return f"[Waidrin response for: {user_input}]"
-        return f"[Generated Response for: {user_input}]"
+            return f"[Waidrin-enhanced response for: {user_input}]"
+        character = self.params.character_name if self.params else "Character"
+        return f"[{character}: {user_input}...]"
 
     def update_after_response(self, response: str, user_input: str):
         if self.memory:
             self.memory.add_memory(f"User: {user_input}", importance=4)
+            self.memory.add_memory(f"{self.params.character_name if self.params else 'Character'}: {response[:80]}...", importance=5)
 
     def get_status(self) -> dict:
-        return {"status": "ok"}
+        return {
+            "has_physics": bool(self.physics),
+            "has_memory": bool(self.memory),
+        }
