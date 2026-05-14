@@ -1,0 +1,1 @@
+"""Consistency package for RGFLAT"""
