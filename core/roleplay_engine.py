@@ -17,9 +17,7 @@ except ImportError:
 # Updated imports for new package structure
 from memory.memory_system import MemorySystem
 from prompts.prompt_builder import MemoryAwarePromptBuilder, LocalPromptPoetV2
-
-# External module imports (will be updated as we refactor further)
-from waidrin_adapter import WaidrinAdapterV2
+from adapters.waidrin_adapter import WaidrinAdapterV2
 
 
 class RoleplayEngine:
