@@ -1,1 +1,51 @@
-"""AI package for RGFLAT (Behavior Trees + Hybrid AI)"""
+"""AI package exports for RGFLAT."""
+
+from .behavior_tree import (
+    Action,
+    Blackboard,
+    BTNode,
+    BehaviorTree,
+    Condition,
+    Decorator,
+    Inverter,
+    NodeStatus,
+    Parallel,
+    Selector,
+    Sequence,
+    create_example_npc_tree,
+    create_memory_action,
+    create_memory_condition,
+    create_physics_action,
+)
+from .hybrid_ai import (
+    UtilityAction,
+    UtilitySelector,
+    create_emotion_consideration,
+    create_memory_consideration,
+    create_tension_consideration,
+    run_hybrid_decision,
+)
+
+__all__ = [
+    "Action",
+    "Blackboard",
+    "BTNode",
+    "BehaviorTree",
+    "Condition",
+    "Decorator",
+    "Inverter",
+    "NodeStatus",
+    "Parallel",
+    "Selector",
+    "Sequence",
+    "UtilityAction",
+    "UtilitySelector",
+    "create_emotion_consideration",
+    "create_example_npc_tree",
+    "create_memory_action",
+    "create_memory_condition",
+    "create_memory_consideration",
+    "create_physics_action",
+    "create_tension_consideration",
+    "run_hybrid_decision",
+]

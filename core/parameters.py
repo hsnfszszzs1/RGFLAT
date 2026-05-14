@@ -1,16 +1,19 @@
 """
-RGFLAT Core - Parameters & Configuration
+RGFLAT Core - Parameters & Configuration.
 
-Unified configuration system combining RoleplayConfig and RoleplayParameters.
+The project now uses one canonical dataclass, ``RoleplayConfig``.  The
+``RoleplayParameters`` name is kept as a compatibility alias for older modules
+and examples that imported it before the package layout was consolidated.
 """
 
-from dataclasses import dataclass, field
-from typing import Dict, Any, Union, Optional
+from dataclasses import dataclass
+from typing import Any, Dict, Union
 
 
 @dataclass
 class RoleplayConfig:
-    """Main configuration for RoleplayEngine."""
+    """Main configuration for ``RoleplayEngine`` and prompt generation."""
+
     character_name: str = "Unknown"
     scenario: str = ""
     setting: str = ""
@@ -22,7 +25,7 @@ class RoleplayConfig:
     use_real_llm: bool = False
     grok_model: str = "grok-2-1212"
 
-    # Extended parameters (from RoleplayParameters)
+    # Extended prompt-shaping parameters.
     personality_traits: str = "mysterious, teasing, dominant"
     speech_style: str = "casual with sarcastic undertones"
     background: str = ""
@@ -41,15 +44,18 @@ class RoleplayConfig:
     is_multi_character: bool = False
     active_character_name: str = ""
 
-    def update(self, **kwargs):
+    def update(self, **kwargs: Any) -> None:
+        """Update known configuration fields in place."""
         for key, value in kwargs.items():
             if hasattr(self, key):
                 setattr(self, key, value)
 
     def to_dict(self) -> Dict[str, Any]:
-        return {k: v for k, v in self.__dict__.items()}
+        """Return a serializable dictionary representation."""
+        return dict(self.__dict__)
 
     def get_prompt_context(self) -> str:
+        """Return a compact human-readable context block."""
         return f"""
 Character: {self.character_name}
 Personality: {self.personality_traits}
@@ -62,3 +68,7 @@ Sexual Tension: {self.sexual_tension}
 Power Dynamic: {self.power_dynamic}
 Pacing: {self.pacing}
 """
+
+
+# Backwards compatibility for earlier flat-layout modules and examples.
+RoleplayParameters = RoleplayConfig
