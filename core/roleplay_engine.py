@@ -102,7 +102,7 @@ class RoleplayEngine:
         if not selector:
             raise ValueError(f"Hybrid Selector '{name}' not found")
         ctx = context or {"character": self.config.character_name}
-        from hybrid_ai import run_hybrid_decision as run_hybrid
+        from ai.hybrid_ai import run_hybrid_decision as run_hybrid
         return run_hybrid(selector, ctx, debug=debug)
 
     # ====================== EVENT / HOOK SYSTEM ======================
