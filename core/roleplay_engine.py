@@ -14,11 +14,11 @@ try:
 except ImportError:
     from core.parameters import RoleplayConfig
 
-# Updated import for new memory package structure
+# Updated imports for new package structure
 from memory.memory_system import MemorySystem
+from prompts.prompt_builder import MemoryAwarePromptBuilder, LocalPromptPoetV2
 
 # External module imports (will be updated as we refactor further)
-from prompt_poet_local import MemoryAwarePromptBuilder, LocalPromptPoetV2
 from waidrin_adapter import WaidrinAdapterV2
 
 
