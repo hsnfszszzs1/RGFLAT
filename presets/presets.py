@@ -3,10 +3,7 @@ RGFLAT Presets Package
 Quick load popular roleplay archetypes.
 """
 
-try:
-    from core.parameters import RoleplayParameters
-except ImportError:
-    from parameters import RoleplayParameters
+from core.parameters import RoleplayConfig
 
 
 PRESETS = {
@@ -48,12 +45,12 @@ PRESETS = {
     }
 }
 
-def load_preset(preset_name: str) -> RoleplayParameters:
+def load_preset(preset_name: str) -> RoleplayConfig:
     if preset_name not in PRESETS:
         preset_name = "dominant_vampire"
     
     p = PRESETS[preset_name]
-    return RoleplayParameters(
+    return RoleplayConfig(
         character_name=p["name"],
         personality_traits=p["personality"],
         speech_style=p["speech"],

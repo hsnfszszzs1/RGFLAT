@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rgflat"
+version = "1.2.0"
+description = "Package-organized roleplay generator with memory, prompts, adapters, and UI."
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = ["jinja2>=3.1.0"]
+
+[project.optional-dependencies]
+llm = ["requests>=2.31.0"]
+
+[project.scripts]
+rgflat = "ui.cli:main"
+
+[tool.setuptools]
+py-modules = ["roleplay_engine", "character_generator"]
+
+[tool.setuptools.packages.find]
+include = ["adapters*", "ai*", "core*", "generators*", "memory*", "physics*", "presets*", "prompts*", "ui*"]

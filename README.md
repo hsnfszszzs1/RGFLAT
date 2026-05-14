@@ -1,183 +1,89 @@
-# 🎭 RGFLAT - RoleplayGenerator v1.2 (Fixed & Runnable Edition)
+# 🎭 RGFLAT - RoleplayGenerator
 
-**Advanced Roleplay Engine with Memory, Behavior Trees & Hybrid AI**  
-**Updated & Fixed: May 2026**  
-**Core:** `RoleplayEngine v3` + `MemorySystem v1.2`
+RGFLAT is a lightweight roleplay engine organized around a small set of Python
+packages: core orchestration, memory, prompt building, adapters, AI helpers,
+generators, physics, presets, and UI entry points.
 
-> **Note:** This is the **fixed and runnable version** of the original repository. Import paths, missing methods, and module references have been corrected for immediate execution in a flat Python structure. Original repo had broken imports and incomplete methods.
-
----
-
-## ✨ Key Features (All Fully Operational)
-
-### Core Systems
-- **RoleplayEngine v3** — Unified orchestrator, plugin/hooks system, session management
-- **MemorySystem v1.2** — Emotional tagging + intensity, relationship graph, decay (with emotional persistence), automatic clustering, save/load persistence
-- **Behavior Tree System** — Full support (Sequence, Selector, Parallel, Decorator, Memory/Physics-aware nodes)
-- **Hybrid AI** — Utility AI + Behavior Trees for dynamic decision making
-- **MemoryAwarePromptBuilder + Prompt Poet v2** — Automatic injection of memories, relationships, emotional context into prompts (Jinja2 templating)
-
-### Integrations
-- **WaidrinAdapterV2** — Deep bidirectional integration with Waidrin state machine + rich context
-- **Preset system** — Vampire, Tsundere, Teacher, Yandere + easy custom
-- **Character/Dialogue/Scenario Generators** + Multi-Character support + Consistency checker
-
-### Interfaces
-- **CLI** with interactive mode + one-shot + debug
-- **Basic Web UI** (index.html) for parameter tweaking and prompt preview
-- Full Python API for extension
-
----
-
-## 🚀 Quick Start (No Installation Needed Beyond Python + jinja2)
+## Quick Start
 
 ```bash
-# Clone or download this fixed version
-cd RGFLAT
+# Install the one required dependency.
+pip install -r requirements.txt
 
-# One-shot example
-python cli.py --preset dominant_vampire --message "Hello there, stranger..."
+# Run a one-shot local placeholder response.
+python -m ui --preset dominant_vampire --message "Hello there, stranger..."
 
-# Interactive mode
-python cli.py --preset tsundere_rival
+# Start an interactive session.
+python -m ui --preset tsundere_rival
 
-# With Waidrin integration
-python cli.py --preset strict_teacher --use-waidrin --debug
+# Optional editable install exposes the rgflat console command.
+pip install -e .
+rgflat --preset strict_teacher --message "You wanted to see me?"
 ```
 
-**Requirements:** Python 3.8+ (jinja2 is optional but recommended for full prompt templating — already present in most environments).
+## Optional Grok / xAI Responses
 
----
+The engine can call the xAI chat-completions API when `requests` is installed
+and an API key is present. Without credentials, it falls back to deterministic
+placeholder responses.
 
-## 📦 Installation (Fixed Version)
-
-1. Download the ZIP or clone the fixed repo.
-2. No `pip install` required for core functionality.
-3. Run directly from the folder.
-
-**Original (broken) clone command fixed here** — this version runs out-of-the-box.
-
----
-
-## 🧠 Architecture Overview
-
-```
-RoleplayEngine
-├── MemorySystem v1.2          (emotional + relational + persistent)
-├── Prompt Poet v2 + MemoryAwarePromptBuilder
-├── WaidrinAdapterV2
-├── Behavior Trees + Hybrid AI (UtilitySelector)
-├── Generators (Character, Dialogue, Scenario)
-└── Consistency + RoleplayPhysics
+```bash
+pip install -e '.[llm]'
+export XAI_API_KEY="your_key_here"
+python -m ui --preset dominant_vampire --use-real-llm --message "Tell me about your past..."
 ```
 
----
-
-## 📁 Project Structure (Complete Fixed Edition)
-
-```
-RGFLAT/
-├── cli.py                      # Main entry point (interactive + one-shot)
-├── roleplay_engine.py          # Core engine v3 (fixed imports)
-├── memory.py                   # MemorySystem v1.2 + added missing methods
-├── prompt_poet_local.py        # Prompt Poet v2 + MemoryAwarePromptBuilder
-├── waidrin_adapter.py          # WaidrinAdapterV2 (renamed for compatibility)
-├── presets.py                  # 4+ ready presets (fixed import)
-├── parameters.py               # RoleplayParameters dataclass
-├── behavior_tree.py            # Full BT system + example NPC tree
-├── hybrid_ai.py                # Utility AI + hybrid runner
-├── character_generator.py
-├── consistency.py
-├── dialogue_generator.py
-├── multi_character.py
-├── roleplay_physics.py
-├── scenario_generator.py
-├── index.html                  # Basic web UI
-├── css/style.css
-├── js/main.js
-└── README.md                   # This file (updated)
-```
-
----
-
-## 🔧 Advanced Usage Examples
+## Python API
 
 ```python
-from roleplay_engine import RoleplayEngine, RoleplayConfig
+from core import RoleplayEngine
 from presets import load_preset
 
-config = RoleplayConfig(character_name="Elias Voss", debug=True)
+config = load_preset("dominant_vampire")
 engine = RoleplayEngine(config)
 
-# One turn
-result = engine.step("You're late again...", use_waidrin=False)
+result = engine.step("You're late again...")
 print(result["response"])
 
-# Add memory manually
 engine.add_memory("User confessed feelings", importance=8.0, emotion="desire", intensity=0.9)
-
-# Save session
 engine.save("my_session.json")
 ```
 
-**Behavior Tree + Hybrid AI:**
+Compatibility wrappers remain available for older flat-layout imports:
+
 ```python
-from behavior_tree import create_example_npc_tree
-from hybrid_ai import UtilitySelector, UtilityAction
-
-# Register and run (see full examples in source)
+from roleplay_engine import RoleplayEngine, RoleplayConfig
+from character_generator import CharacterGenerator
+from consistency import CharacterConsistency
 ```
 
----
+## Project Structure
 
-## 📌 Changes in This Fixed Edition
-- All `core.` imports removed → flat module imports
-- `prompt_poet_v2` → `prompt_poet_local.py`
-- `waidrin_adapter_v2` → `waidrin_adapter.py`
-- Added 3 missing methods to `MemorySystem` (get_lore_context, _get_emotional_summary, get_context_for_waidrin)
-- README completed with accurate structure and instructions
-- __pycache__ cleaned
-- Ready for immediate use and further extension (add real LLM in `step()` or `build_prompt()`)
-
----
-
----
-
-## 🤖 Real Grok LLM Integration (NEW in v1.2 Fixed)
-
-This version now supports **real responses from Grok** (xAI)!
-
-### How to use:
-```bash
-# Set your xAI API key (get free key at https://console.x.ai)
-export XAI_API_KEY="your_key_here"
-
-# Run with real Grok
-python cli.py --preset dominant_vampire --use-real-llm --message "Tell me about your past..."
-
-# Or in interactive mode
-python cli.py --preset tsundere_rival --use-real-llm
+```text
+RGFLAT/
+├── adapters/              # External integration adapters, including Waidrin
+├── ai/                    # Behavior tree and hybrid utility AI helpers
+├── core/                  # RoleplayEngine and canonical configuration dataclass
+├── consistency/           # Character and narrative consistency checks
+├── generators/            # Character, dialogue, scenario, and multi-character helpers
+├── memory/                # MemorySystem, relationship tracker, lorebook support
+├── physics/               # Emotional/tension state helpers
+├── presets/               # Ready-to-use character/scenario presets
+├── prompts/               # Local prompt templating and memory-aware prompt builder
+├── ui/                    # CLI plus web assets under ui/web
+├── roleplay_engine.py     # Backward-compatible import wrapper
+├── character_generator.py # Backward-compatible import wrapper
+├── pyproject.toml         # Packaging metadata and console script
+└── requirements.txt       # Runtime dependency list
 ```
 
-### In Python code:
-```python
-config = RoleplayConfig(
-    character_name="Elias Voss",
-    use_real_llm=True,           # Enable Grok
-    grok_model="grok-2-1212"     # or "grok-beta"
-)
-engine = RoleplayEngine(config)
-result = engine.step("I love you...", use_real_llm=True)
-print(result["response"])   # Real Grok-generated reply!
-```
+## Web UI
 
-**Requirements:** `requests` (usually pre-installed) + valid `XAI_API_KEY`.
+The browser assets live in `ui/web/`. Open `ui/web/index.html` directly, or open
+the repository-root `index.html` redirect if a tool expects a root web entry.
 
-The full rich prompt (with memories, relationships, emotional state) is automatically sent to Grok.
+## Notes for Contributors
 
----
-
-**Made with ❤️ for advanced roleplay systems.**  
-Version 1.2 Fixed + Real Grok LLM — May 2026
-
-Run it. Extend it. Enjoy immersive roleplay! 🎭
+- Prefer package imports (`from core import RoleplayEngine`, `from presets import load_preset`).
+- Keep backward-compatible root wrappers thin; put implementation in packages.
+- Use `python -m compileall .` and at least one CLI smoke test before committing.
