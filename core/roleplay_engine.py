@@ -2,7 +2,6 @@
 RGFLAT Core - RoleplayEngine v3 (Refactored)
 
 Central orchestrator for the roleplay system.
-Moved to core/ package as part of modular architecture refactor.
 """
 
 from typing import Optional, Dict, Any, Callable, List
@@ -15,8 +14,10 @@ try:
 except ImportError:
     from core.parameters import RoleplayConfig
 
-# External module imports (will be updated as we refactor other packages)
-from memory import MemorySystem
+# Updated import for new memory package structure
+from memory.memory_system import MemorySystem
+
+# External module imports (will be updated as we refactor further)
 from prompt_poet_local import MemoryAwarePromptBuilder, LocalPromptPoetV2
 from waidrin_adapter import WaidrinAdapterV2
 
